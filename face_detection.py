@@ -39,9 +39,10 @@ for directory in testing_images_directories:
     for img in images:
         testing_images.append(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
-# print(len(image_list))
-for img in testing_images:
-    plt.figure(figsize=(20, 20))
-    plt.subplot(111)
-    plt.imshow(img, cmap='gray')
-    plt.show()
+
+"""
+4.1 + 4.3 --- Training Images Feature Extraction using SIFT
+"""
+
+# create a SIFT object
+sift = cv2.xfeatures2d.SIFT_create()
