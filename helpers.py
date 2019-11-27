@@ -8,41 +8,48 @@ from sklearn.metrics import confusion_matrix
 from sklearn.ensemble import RandomForestClassifier
 import glob
 
-abdullah_training_directory = './images/Abdullah/training/'
-mustafa_training_directory = './images/Mustafa/training/'
-saleh_training_directory = './images/Saleh/training/'
-adham_training_directory = './images/Adham/training/'
-
-abdullah_testing_directory = './images/Abdullah/testing/'
-mustafa_testing_directory = './images/Mustafa/testing/'
-saleh_testing_directory = './images/Saleh/testing/'
-adham_testing_directory = './images/Adham/testing/'
-
-
-training_images_directories = [abdullah_training_directory, mustafa_training_directory, saleh_training_directory, adham_training_directory]
-testing_images_directories = [abdullah_testing_directory, mustafa_testing_directory, saleh_testing_directory, adham_testing_directory]
-
-training_images = []
-testing_images = []
+# Defining Directory Paths
+training_images_directories = ['./images/Abdullah/training/', 
+                               './images/Mustafa/training/',
+                               './images/Saleh/training/',
+                               './images/Adham/training/']
+testing_images_directories = ['./images/Abdullah/testing/',
+                              './images/Mustafa/testing/',
+                              './images/Saleh/testing/',
+                              './images/Adham/testing/']
 
 # Load the cascade for facial detection
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-# Populate Training Image list
-for directory in training_images_directories:
-    images = [cv2.imread(file) for file in glob.glob("{directory}*.jpg".format(directory=directory))]
-    for img in images:
-        training_images.append(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-
-# Populate Testing Image list
-for directory in testing_images_directories:
-    images = [cv2.imread(file) for file in glob.glob("{directory}*.jpg".format(directory=directory))]
-    for img in images:
-        testing_images.append(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
 
-"""
-4.1 + 4.3 --- Training Images Feature Extraction using SIFT
-"""
 
-# create a SIFT object
-sift = cv2.xfeatures2d.SIFT_create()
+class ImageManager:
+    def __init__(self):
+        # Defining Directory Paths
+        self.training_images_directories = ['./images/Abdullah/training/', 
+                                             './images/Mustafa/training/',
+                                             './images/Saleh/training/',
+                                             './images/Adham/training/']
+        self.testing_images_directories = ['./images/Abdullah/testing/',
+                                           './images/Mustafa/testing/',
+                                           './images/Saleh/testing/',
+                                           './images/Adham/testing/']
+        # Load the cascade for facial detection
+        self.face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+        
+    def get_training_images(self, color=cv2.COLOR_BGR2RGB):
+        # Populate Training Image list
+        for directory in self.training_images_directories:
+            images = [cv2.imread(file) for file in glob.glob("{directory}*.jpg".format(directory=directory))]
+            for img in images:
+                training_images.append(cv2.cvtColor(img, color))
+        return training_images
+    
+    def get_training_images(self, color=cv2.COLOR_BGR2RGB):
+        # Populate Training Image list
+        for directory in self.testing_images_directories:
+            images = [cv2.imread(file) for file in glob.glob("{directory}*.jpg".format(directory=directory))]
+            for img in images:
+                training_images.append(cv2.cvtColor(img, color))
+        return training_images
