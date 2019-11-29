@@ -33,7 +33,19 @@ class ImageManager:
         min_y =  bounds["min_y"]
         max_y =  bounds["max_y"]
         return img[min_y:max_y, min_x:max_x]
-        
+
+    def extract_faces(self, img, faces):
+        """
+        Function takes in an image and bounds dict and returns a face
+        """
+        extracted_faces = []
+        for (x, y, w, h) in faces:
+            face = img[y:y+h, x:x+w]
+            face = cv2.resize(face, (128,128))
+            extracted_faces.append(face)
+
+        return extracted_faces
+
     def get_training_images(self, color=cv2.COLOR_BGR2RGB):
         training_images = []
         # Populate Training Image list
