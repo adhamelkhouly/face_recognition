@@ -9,20 +9,20 @@ class ImageManager:
         self.training_images_directories = ['./images/Abdullah/training/', 
                                              './images/Mustafa/training/',
                                              './images/Saleh/training/',
-                                             './images/Adham/training/']
+                                             './images/Adham/training/',
+                                             './images/Anees/training/']
         self.testing_images_directories = ['./images/Abdullah/testing/',
                                            './images/Mustafa/testing/',
                                            './images/Saleh/testing/',
-                                           './images/Adham/testing/']
-        # Load the cascade for facial detection
-        self.face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+                                           './images/Adham/testing/',
+                                           './images/Anees/testing/']
         
         self.training_bounds = []
         self.testing_bounds = []
         self.training_faces = []
         self.testing_faces = []
-        self.training_images = None
-        self.testing_images = None
+        self.training_images = []
+        self.testing_images = []
     
     def extract_face(self, img, bounds):
         """
@@ -33,19 +33,7 @@ class ImageManager:
         min_y =  bounds["min_y"]
         max_y =  bounds["max_y"]
         return img[min_y:max_y, min_x:max_x]
-
-    def extract_faces(self, img, faces):
-        """
-        Function takes in an image and bounds dict and returns a face
-        """
-        extracted_faces = []
-        for (x, y, w, h) in faces:
-            face = img[y:y+h, x:x+w]
-            face = cv2.resize(face, (128,128))
-            extracted_faces.append(face)
-
-        return extracted_faces
-
+        
     def get_training_images(self, color=cv2.COLOR_BGR2RGB):
         training_images = []
         # Populate Training Image list
@@ -155,7 +143,7 @@ class ImageManager:
             face = self.extract_face(img, bounds_dict)
             face = cv2.resize(face, (128,128))
             self.testing_faces.append(face)  
-            
+
         self.testing_bounds = testing_bounds
         
         return result_images, testing_bounds
