@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 import glob
+from sklearn.metrics import confusion_matrix
 
 
 class ImageManager:
@@ -171,3 +172,20 @@ class ImageManager:
         self.testing_bounds = testing_bounds
 
         return result_images, testing_bounds
+    
+    
+    """
+    Computing the accuracy of a classifier's prediction against the actual values from the test batch
+    """
+    def compute_accuracy(self, prediction, target):
+
+        # correct predictions
+        num_correct = 0
+        for i, x in enumerate(prediction):
+            if(x == target[i]):
+                # increment the number of correct predictions if there is a match
+                num_correct += 1
+
+        # Accuracy as a percentage
+        accuracy = num_correct/len(prediction) * 100
+        return accuracy
