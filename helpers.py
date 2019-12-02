@@ -51,7 +51,7 @@ class ImageManager:
         training_images = []
         # Populate Training Image list
         for directory in self.training_images_directories:
-            images = [cv2.imread(file) for file in glob.glob("{directory}*.jpg".format(directory=directory))]
+            images = [cv2.imread(file) for file in sorted(glob.glob("{directory}*.jpg".format(directory=directory)))]
             for img in images:
                 training_images.append(cv2.cvtColor(img, color))
         self.training_images = training_images
@@ -61,7 +61,7 @@ class ImageManager:
         testing_images = []
         # Populate Testing Image list
         for directory in self.testing_images_directories:
-            images = [cv2.imread(file) for file in glob.glob("{directory}*.jpg".format(directory=directory))]
+            images = [cv2.imread(file) for file in sorted(glob.glob("{directory}*.jpg".format(directory=directory)))]
             for img in images:
                 testing_images.append(cv2.cvtColor(img, color))
         self.testing_images = testing_images
@@ -71,9 +71,8 @@ class ImageManager:
         group_images = []
         # Populate Group Image list
         for directory in self.group_images_directories:
-            images = [cv2.imread(file) for file in glob.glob("{directory}*.jpg".format(directory=directory))]
+            images = [cv2.imread(file) for file in sorted(glob.glob("{directory}*.jpg".format(directory=directory)))]
             for img in images:
-                # cv2.resize(img, (128,128))
                 group_images.append(cv2.cvtColor(img, color))
         self.group_images = group_images
         return group_images
